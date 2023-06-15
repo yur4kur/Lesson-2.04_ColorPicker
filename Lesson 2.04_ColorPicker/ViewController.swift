@@ -44,21 +44,19 @@ class ViewController: UIViewController {
             finalColorView.backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
         }
         
-        switch sender.tag {
-        case 0:
+        switch sender {
+        case redSlider:
             red = CGFloat(sender.value)
             setColor()
             setLabelText(of: redValueLabel, from: sender)
-        case 1:
+        case greenSlider:
             green = CGFloat(sender.value)
             setColor()
             setLabelText(of: greenValueLabel, from: sender)
-        case 2:
+        default:
             blue = CGFloat(sender.value)
             setColor()
             setLabelText(of: blueValueLabel, from: sender)
-        default:
-            print("Something gone wrong")
         }
     }
     
