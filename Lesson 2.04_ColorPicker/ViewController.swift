@@ -48,6 +48,7 @@ class ViewController: UIViewController {
         setColor()
     }
     
+    // MARK: Private methods
     private func setLabelText(of label: UILabel, from slider: UISlider) {
         label.text = String(format: "%.2f", slider.value)
     }
