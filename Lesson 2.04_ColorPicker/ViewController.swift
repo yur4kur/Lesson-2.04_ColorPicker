@@ -23,7 +23,8 @@ class ViewController: UIViewController {
     // MARK: Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(finalColorView)
+        finalColorView.layer.cornerRadius = finalColorView.bounds.height * 0.15
+        setColor()
         
         setLabelText(of: redValueLabel, from: redSlider)
         setLabelText(of: greenValueLabel, from: greenSlider)
@@ -36,39 +37,15 @@ class ViewController: UIViewController {
     
     // MARK: IBActions
     @IBAction func moveSlider(_ sender: UISlider) {
-        var red = CGFloat(redSlider.value)
-        var green = CGFloat(greenSlider.value)
-        var blue = CGFloat(blueSlider.value)
-        
-        func setColor() {
-            finalColorView.backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
-        }
-        
         switch sender {
         case redSlider:
-            red = CGFloat(sender.value)
-            setColor()
             setLabelText(of: redValueLabel, from: sender)
         case greenSlider:
-            green = CGFloat(sender.value)
-            setColor()
             setLabelText(of: greenValueLabel, from: sender)
         default:
-            blue = CGFloat(sender.value)
-            setColor()
             setLabelText(of: blueValueLabel, from: sender)
         }
-    }
-    
-    // MARK: Private methods
-    private func setupView(_ view: UIView) {
-        view.layer.cornerRadius = view.bounds.height * 0.15
-        view.backgroundColor = UIColor(
-            red: CGFloat(redSlider.value),
-            green: CGFloat(greenSlider.value),
-            blue: CGFloat(blueSlider.value),
-            alpha: 1
-        )
+        setColor()
     }
     
     private func setLabelText(of label: UILabel, from slider: UISlider) {
@@ -78,6 +55,15 @@ class ViewController: UIViewController {
     private func setupSlider(_ slider: UISlider, minimumTrackColor color: UIColor) {
         slider.minimumTrackTintColor = color
         slider.maximumTrackTintColor = .placeholderText
+    }
+    
+    private func setColor() {
+        finalColorView.backgroundColor = UIColor(
+            red: CGFloat(redSlider.value),
+            green: CGFloat(greenSlider.value),
+            blue: CGFloat(blueSlider.value),
+            alpha: 1
+        )
     }
 }
 
