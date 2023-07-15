@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     
     //MARK: IBOutlets
     @IBOutlet var finalColorView: UIView!
@@ -47,6 +47,10 @@ class ViewController: UIViewController {
             setLabelText(of: blueValueLabel, from: sender)
         }
         setColor()
+    }
+    
+    @IBAction func doneButtonDidTap() {
+        dismiss(animated: true)
     }
     
     // MARK: Private methods
