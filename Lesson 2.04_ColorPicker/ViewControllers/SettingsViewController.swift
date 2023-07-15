@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     // MARK: Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         finalColorView.layer.cornerRadius = finalColorView.bounds.height * 0.15
         setColor()
         
