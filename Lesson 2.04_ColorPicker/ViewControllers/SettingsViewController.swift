@@ -20,6 +20,9 @@ final class SettingsViewController: UIViewController {
     @IBOutlet var greenSlider: UISlider!
     @IBOutlet var blueSlider: UISlider!
     
+    // MARK: Public properties
+    var delegate: SettingsViewControllerDelegate!
+    
     // MARK: Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +53,7 @@ final class SettingsViewController: UIViewController {
     }
     
     @IBAction func doneButtonDidTap() {
+        delegate.setNewColor(with: .cyan)
         dismiss(animated: true)
     }
     
