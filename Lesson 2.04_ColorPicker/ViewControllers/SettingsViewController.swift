@@ -22,13 +22,26 @@ final class SettingsViewController: UIViewController {
     
     // MARK: Public properties
     var delegate: SettingsViewControllerDelegate!
+    var returnedColor: UIColor!
+    
+    // MARK: Private properties
+    private var chosenColor: UIColor {
+        get { UIColor(
+            red: CGFloat(redSlider.value),
+            green: CGFloat(greenSlider.value),
+            blue: CGFloat(blueSlider.value),
+            alpha: 1
+        )
+        }
+    }
     
     // MARK: Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         finalColorView.layer.cornerRadius = finalColorView.bounds.height * 0.15
-        setColor()
+        finalColorView.backgroundColor = returnedColor
+        setSlidersValues(color: returnedColor)
         
         setLabelText(of: redValueLabel, from: redSlider)
         setLabelText(of: greenValueLabel, from: greenSlider)
@@ -49,11 +62,11 @@ final class SettingsViewController: UIViewController {
         default:
             setLabelText(of: blueValueLabel, from: sender)
         }
-        setColor()
+        finalColorView.backgroundColor = chosenColor
     }
     
     @IBAction func doneButtonDidTap() {
-        delegate.setNewColor(with: .cyan)
+        delegate.setNewColor(with: chosenColor)
         dismiss(animated: true)
     }
     
@@ -67,13 +80,17 @@ final class SettingsViewController: UIViewController {
         slider.maximumTrackTintColor = .placeholderText
     }
     
-    private func setColor() {
-        finalColorView.backgroundColor = UIColor(
-            red: CGFloat(redSlider.value),
-            green: CGFloat(greenSlider.value),
-            blue: CGFloat(blueSlider.value),
-            alpha: 1
-        )
+    private func setSlidersValues(color: UIColor) {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        redSlider.value = Float(red)
+        greenSlider.value = Float(green)
+        blueSlider.value = Float(blue)
     }
 }
 
