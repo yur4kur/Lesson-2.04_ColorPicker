@@ -22,13 +22,13 @@ final class MainViewController: UIViewController {
 }
 
 // MARK: Extensions
-extension MainViewController: SettingsViewControllerDelegate {
+extension MainViewController: ISettingsViewControllerDelegate {
     func setNewColor(with color: UIColor) {
         view.backgroundColor = color
     }
 }
 
 // MARK: Protocols
-protocol SettingsViewControllerDelegate {
+protocol ISettingsViewControllerDelegate {
     func setNewColor(with color: UIColor)
 }

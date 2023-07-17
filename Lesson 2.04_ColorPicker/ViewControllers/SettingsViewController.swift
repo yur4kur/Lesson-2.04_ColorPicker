@@ -25,7 +25,7 @@ final class SettingsViewController: UIViewController {
     @IBOutlet var blueTextField: UITextField!
     
     // MARK: Public properties
-    var delegate: SettingsViewControllerDelegate!
+    var delegate: ISettingsViewControllerDelegate!
     var returnedColor: UIColor!
     
     // MARK: Private properties
@@ -43,7 +43,6 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         
         finalColorView.layer.cornerRadius = finalColorView.bounds.height * 0.15
-       // finalColorView.backgroundColor = returnedColor
         setFinalColorView(with: returnedColor)
         
         redTextField.delegate = self
@@ -74,7 +73,6 @@ final class SettingsViewController: UIViewController {
         default:
             setLabelAndTextfieldText(of: blueValueLabel, and: blueTextField, from: sender)
         }
-        //finalColorView.backgroundColor = chosenColor
         setFinalColorView(with: chosenColor)
     }
     
@@ -113,9 +111,25 @@ final class SettingsViewController: UIViewController {
 }
 
 // MARK: Extensions
+extension SettingsViewController {
+    private func showAlert(title: String, message: String, textField: UITextField? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            textField?.text?.removeAll()
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+}
+
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let value = Float(textField.text ?? "") {
+        guard let text = textField.text, !text.isEmpty else {
+            return showAlert(title: "Ooops", message: "Value is missing!")
+        }
+        guard let value = Float(text), (value >= 0 && value <= 1) else {
+            return showAlert(title: "Ooops", message: "Wrong value!", textField: textField)
+        }
             switch textField {
             case redTextField:
                 redValueLabel.text = textField.text
@@ -127,9 +141,6 @@ extension SettingsViewController: UITextFieldDelegate {
                 blueValueLabel.text = blueTextField.text
                 blueSlider.value = value
             }
-            //finalColorView.backgroundColor = chosenColor
             setFinalColorView(with: chosenColor)
-        }
-        
     }
 }
