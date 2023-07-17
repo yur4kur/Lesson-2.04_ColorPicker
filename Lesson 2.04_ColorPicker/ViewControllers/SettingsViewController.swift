@@ -20,6 +20,10 @@ final class SettingsViewController: UIViewController {
     @IBOutlet var greenSlider: UISlider!
     @IBOutlet var blueSlider: UISlider!
     
+    @IBOutlet var redTextField: UITextField!
+    @IBOutlet var greenTextField: UITextField!
+    @IBOutlet var blueTextField: UITextField!
+    
     // MARK: Public properties
     var delegate: SettingsViewControllerDelegate!
     var returnedColor: UIColor!
@@ -30,8 +34,7 @@ final class SettingsViewController: UIViewController {
             red: CGFloat(redSlider.value),
             green: CGFloat(greenSlider.value),
             blue: CGFloat(blueSlider.value),
-            alpha: 1
-        )
+            alpha: 1)
         }
     }
     
@@ -50,6 +53,10 @@ final class SettingsViewController: UIViewController {
         setupSlider(redSlider, minimumTrackColor: .red)
         setupSlider(greenSlider, minimumTrackColor: .green)
         setupSlider(blueSlider, minimumTrackColor: .blue)
+        
+        redTextField.delegate = self
+        greenTextField.delegate = self
+        blueTextField.delegate = self
     }
     
     // MARK: IBActions
@@ -94,3 +101,9 @@ final class SettingsViewController: UIViewController {
     }
 }
 
+// MARK: Extensions
+extension SettingsViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+    }
+}
