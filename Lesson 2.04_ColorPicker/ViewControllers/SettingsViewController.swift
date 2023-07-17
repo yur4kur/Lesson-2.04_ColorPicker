@@ -30,12 +30,12 @@ final class SettingsViewController: UIViewController {
     
     // MARK: Private properties
     private var chosenColor: UIColor {
-        get { UIColor(
+         UIColor(
             red: CGFloat(redSlider.value),
             green: CGFloat(greenSlider.value),
             blue: CGFloat(blueSlider.value),
             alpha: 1)
-        }
+        
     }
     
     // MARK: Override methods
@@ -43,33 +43,39 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         
         finalColorView.layer.cornerRadius = finalColorView.bounds.height * 0.15
-        finalColorView.backgroundColor = returnedColor
-        setSlidersValues(color: returnedColor)
-        
-        setLabelText(of: redValueLabel, from: redSlider)
-        setLabelText(of: greenValueLabel, from: greenSlider)
-        setLabelText(of: blueValueLabel, from: blueSlider)
-        
-        setupSlider(redSlider, minimumTrackColor: .red)
-        setupSlider(greenSlider, minimumTrackColor: .green)
-        setupSlider(blueSlider, minimumTrackColor: .blue)
+       // finalColorView.backgroundColor = returnedColor
+        setFinalColorView(with: returnedColor)
         
         redTextField.delegate = self
         greenTextField.delegate = self
         blueTextField.delegate = self
+        
+        setSlidersValues(color: returnedColor)
+        setupSlider(redSlider, minimumTrackColor: .red)
+        setupSlider(greenSlider, minimumTrackColor: .green)
+        setupSlider(blueSlider, minimumTrackColor: .blue)
+        
+        setLabelAndTextfieldText(of: redValueLabel, and: redTextField, from: redSlider)
+        setLabelAndTextfieldText(of: greenValueLabel, and: greenTextField, from: greenSlider)
+        setLabelAndTextfieldText(of: blueValueLabel, and: blueTextField, from: blueSlider)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(false)
     }
     
     // MARK: IBActions
     @IBAction func moveSlider(_ sender: UISlider) {
         switch sender {
         case redSlider:
-            setLabelText(of: redValueLabel, from: sender)
+            setLabelAndTextfieldText(of: redValueLabel, and: redTextField, from: sender)
         case greenSlider:
-            setLabelText(of: greenValueLabel, from: sender)
+            setLabelAndTextfieldText(of: greenValueLabel, and: greenTextField, from: sender)
         default:
-            setLabelText(of: blueValueLabel, from: sender)
+            setLabelAndTextfieldText(of: blueValueLabel, and: blueTextField, from: sender)
         }
-        finalColorView.backgroundColor = chosenColor
+        //finalColorView.backgroundColor = chosenColor
+        setFinalColorView(with: chosenColor)
     }
     
     @IBAction func doneButtonDidTap() {
@@ -78,8 +84,13 @@ final class SettingsViewController: UIViewController {
     }
     
     // MARK: Private methods
-    private func setLabelText(of label: UILabel, from slider: UISlider) {
+    private func setFinalColorView(with color: UIColor) {
+        finalColorView.backgroundColor = color
+    }
+    
+    private func setLabelAndTextfieldText(of label: UILabel, and textField: UITextField, from slider: UISlider) {
         label.text = String(format: "%.2f", slider.value)
+        textField.text = String(format: "%.2f", slider.value)
     }
     
     private func setupSlider(_ slider: UISlider, minimumTrackColor color: UIColor) {
@@ -104,6 +115,21 @@ final class SettingsViewController: UIViewController {
 // MARK: Extensions
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if let value = Float(textField.text ?? "") {
+            switch textField {
+            case redTextField:
+                redValueLabel.text = textField.text
+                redSlider.value = value
+            case greenTextField:
+                greenValueLabel.text = textField.text
+                greenSlider.value = value
+            default:
+                blueValueLabel.text = blueTextField.text
+                blueSlider.value = value
+            }
+            //finalColorView.backgroundColor = chosenColor
+            setFinalColorView(with: chosenColor)
+        }
         
     }
 }
