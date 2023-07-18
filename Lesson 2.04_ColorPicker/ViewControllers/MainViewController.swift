@@ -9,11 +9,7 @@ import UIKit
 
 final class MainViewController: UIViewController {
 
-    // MARK: Override methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
+    // MARK: Override methods 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let settingsVC = segue.destination as? SettingsViewController else { return }
         settingsVC.delegate = self

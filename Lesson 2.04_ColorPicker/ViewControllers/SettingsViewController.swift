@@ -35,7 +35,6 @@ final class SettingsViewController: UIViewController {
             green: CGFloat(greenSlider.value),
             blue: CGFloat(blueSlider.value),
             alpha: 1)
-        
     }
     
     // MARK: Override methods
@@ -49,7 +48,7 @@ final class SettingsViewController: UIViewController {
         greenTextField.delegate = self
         blueTextField.delegate = self
         
-        setSlidersValues(color: returnedColor)
+        setSlidersValues(from: returnedColor)
         setupSlider(redSlider, minimumTrackColor: .red)
         setupSlider(greenSlider, minimumTrackColor: .green)
         setupSlider(blueSlider, minimumTrackColor: .blue)
@@ -57,9 +56,15 @@ final class SettingsViewController: UIViewController {
         setLabelAndTextfieldText(of: redValueLabel, and: redTextField, from: redSlider)
         setLabelAndTextfieldText(of: greenValueLabel, and: greenTextField, from: greenSlider)
         setLabelAndTextfieldText(of: blueValueLabel, and: blueTextField, from: blueSlider)
+        
+        let toolbar = createToolbar()
+        redTextField.inputAccessoryView = toolbar
+        greenTextField.inputAccessoryView = toolbar
+        blueTextField.inputAccessoryView = toolbar
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
         view.endEditing(false)
     }
     
@@ -96,7 +101,7 @@ final class SettingsViewController: UIViewController {
         slider.maximumTrackTintColor = .placeholderText
     }
     
-    private func setSlidersValues(color: UIColor) {
+    private func setSlidersValues(from color: UIColor) {
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
@@ -107,6 +112,26 @@ final class SettingsViewController: UIViewController {
         redSlider.value = Float(red)
         greenSlider.value = Float(green)
         blueSlider.value = Float(blue)
+    }
+    
+    private func createToolbar() -> UIToolbar {
+        let toolbar = UIToolbar()
+        let flexibleSpace = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: self,
+            action: nil)
+        let toolbarDoneButton = UIBarButtonItem(
+            title: "Done",
+            style: .done,
+            target: self,
+            action: #selector(doneDidTap))
+        toolbar.items = [flexibleSpace, toolbarDoneButton]
+        toolbar.sizeToFit()
+        return toolbar
+    }
+    
+    @objc private func doneDidTap() {
+        view.endEditing(false)
     }
 }
 
@@ -125,21 +150,21 @@ extension SettingsViewController {
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text, !text.isEmpty else {
-            return showAlert(title: "Ooops", message: "Value is missing!")
+            return showAlert(title: "Ooops!", message: "Value is missing!")
         }
         guard let value = Float(text), (value >= 0 && value <= 1) else {
-            return showAlert(title: "Ooops", message: "Wrong value!", textField: textField)
+            return showAlert(title: "Wrong value", message: "Value must be decimal!", textField: textField)
         }
             switch textField {
             case redTextField:
                 redValueLabel.text = textField.text
-                redSlider.value = value
+                redSlider.setValue(value, animated: true)
             case greenTextField:
                 greenValueLabel.text = textField.text
-                greenSlider.value = value
+                greenSlider.setValue(value, animated: true)
             default:
                 blueValueLabel.text = blueTextField.text
-                blueSlider.value = value
+                blueSlider.setValue(value, animated: true)
             }
             setFinalColorView(with: chosenColor)
     }
