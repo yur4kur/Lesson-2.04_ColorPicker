@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ISettingsViewControllerDelegate {
+    func setNewColor(with color: UIColor)
+}
+
 final class MainViewController: UIViewController {
 
     // MARK: Override methods 
@@ -24,7 +28,4 @@ extension MainViewController: ISettingsViewControllerDelegate {
     }
 }
 
-// MARK: Protocols
-protocol ISettingsViewControllerDelegate {
-    func setNewColor(with color: UIColor)
-}
+

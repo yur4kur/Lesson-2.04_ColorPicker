@@ -30,7 +30,7 @@ final class SettingsViewController: UIViewController {
     
     // MARK: Private properties
     private var chosenColor: UIColor {
-         UIColor(
+        UIColor(
             red: CGFloat(redSlider.value),
             green: CGFloat(greenSlider.value),
             blue: CGFloat(blueSlider.value),
@@ -53,9 +53,9 @@ final class SettingsViewController: UIViewController {
         setupSlider(greenSlider, minimumTrackColor: .green)
         setupSlider(blueSlider, minimumTrackColor: .blue)
         
-        setLabelAndTextfieldText(of: redValueLabel, and: redTextField, from: redSlider)
-        setLabelAndTextfieldText(of: greenValueLabel, and: greenTextField, from: greenSlider)
-        setLabelAndTextfieldText(of: blueValueLabel, and: blueTextField, from: blueSlider)
+        setText(of: redValueLabel, and: redTextField, from: redSlider)
+        setText(of: greenValueLabel, and: greenTextField, from: greenSlider)
+        setText(of: blueValueLabel, and: blueTextField, from: blueSlider)
         
         let toolbar = createToolbar()
         redTextField.inputAccessoryView = toolbar
@@ -72,11 +72,11 @@ final class SettingsViewController: UIViewController {
     @IBAction func moveSlider(_ sender: UISlider) {
         switch sender {
         case redSlider:
-            setLabelAndTextfieldText(of: redValueLabel, and: redTextField, from: sender)
+            setText(of: redValueLabel, and: redTextField, from: sender)
         case greenSlider:
-            setLabelAndTextfieldText(of: greenValueLabel, and: greenTextField, from: sender)
+            setText(of: greenValueLabel, and: greenTextField, from: sender)
         default:
-            setLabelAndTextfieldText(of: blueValueLabel, and: blueTextField, from: sender)
+            setText(of: blueValueLabel, and: blueTextField, from: sender)
         }
         setFinalColorView(with: chosenColor)
     }
@@ -91,7 +91,7 @@ final class SettingsViewController: UIViewController {
         finalColorView.backgroundColor = color
     }
     
-    private func setLabelAndTextfieldText(of label: UILabel, and textField: UITextField, from slider: UISlider) {
+    private func setText(of label: UILabel, and textField: UITextField, from slider: UISlider) {
         label.text = String(format: "%.2f", slider.value)
         textField.text = String(format: "%.2f", slider.value)
     }
@@ -124,13 +124,13 @@ final class SettingsViewController: UIViewController {
             title: "Done",
             style: .done,
             target: self,
-            action: #selector(doneDidTap))
+            action: #selector(doneToolbarButtonDidTap))
         toolbar.items = [flexibleSpace, toolbarDoneButton]
         toolbar.sizeToFit()
         return toolbar
     }
     
-    @objc private func doneDidTap() {
+    @objc private func doneToolbarButtonDidTap() {
         view.endEditing(false)
     }
 }
@@ -150,22 +150,27 @@ extension SettingsViewController {
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text, !text.isEmpty else {
-            return showAlert(title: "Ooops!", message: "Value is missing!")
+            return showAlert(
+                title: "Ooops!",
+                message: "Value is missing!")
         }
         guard let value = Float(text), (value >= 0 && value <= 1) else {
-            return showAlert(title: "Wrong value", message: "Value must be decimal!", textField: textField)
+            return showAlert(
+                title: "Wrong value",
+                message: "Value must be decimal!",
+                textField: textField)
         }
-            switch textField {
-            case redTextField:
-                redValueLabel.text = textField.text
-                redSlider.setValue(value, animated: true)
-            case greenTextField:
-                greenValueLabel.text = textField.text
-                greenSlider.setValue(value, animated: true)
-            default:
-                blueValueLabel.text = blueTextField.text
-                blueSlider.setValue(value, animated: true)
-            }
-            setFinalColorView(with: chosenColor)
+        switch textField {
+        case redTextField:
+            redValueLabel.text = textField.text
+            redSlider.setValue(value, animated: true)
+        case greenTextField:
+            greenValueLabel.text = textField.text
+            greenSlider.setValue(value, animated: true)
+        default:
+            blueValueLabel.text = blueTextField.text
+            blueSlider.setValue(value, animated: true)
+        }
+        setFinalColorView(with: chosenColor)
     }
 }
