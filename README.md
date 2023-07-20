@@ -1,9 +1,14 @@
 # Lesson-2.04 & 2.09_ColorizedApp
 SwiftBook HomeWork Lesson 2.04_ColorizedApp
 
-![Simulator Screenshot - iPhone 14 Pro - 2023-07-20 at 10 18 48](https://github.com/yur4kur/Lesson-2.04_ColorPicker/assets/105720427/ca46b0eb-4687-4916-92cc-5be6606cdc82)
-![Simulator Screenshot - iPhone 14 Pro - 2023-07-20 at 10 18 59](https://github.com/yur4kur/Lesson-2.04_ColorPicker/assets/105720427/74333c50-4c27-47cc-a397-1d876c5a24b9)
-![Simulator Screenshot - iPhone 14 Pro - 2023-07-20 at 10 19 18](https://github.com/yur4kur/Lesson-2.04_ColorPicker/assets/105720427/2de84d4c-84d4-4212-bb8a-4690c42b24fa)
+![Simulator Screenshot - iPhone 14 Pro - 2023-07-20 at 10 18 48](https://github.com/yur4kur/Lesson-2.04_ColorPicker/assets/105720427/75680dc6-434f-44fa-affb-f13cb5860b8b)
+![Simulator Screenshot - iPhone 14 Pro - 2023-07-20 at 10 18 59](https://github.com/yur4kur/Lesson-2.04_ColorPicker/assets/105720427/b36ad7bc-ce9b-4401-a366-013298aeb5a2)
+![Simulator Screenshot - iPhone 14 Pro - 2023-07-20 at 10 19 18](https://github.com/yur4kur/Lesson-2.04_ColorPicker/assets/105720427/0cb2c496-7b86-493a-9c0e-a7cb4c608ee2)
+![Simulator Screenshot - iPhone 14 Pro - 2023-07-20 at 10 34 00](https://github.com/yur4kur/Lesson-2.04_ColorPicker/assets/105720427/67a06c79-2513-47ce-9562-1c9e9319f7fd)
+
+
+
+
 
 
 
