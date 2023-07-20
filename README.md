@@ -18,5 +18,6 @@ SwiftBook HomeWork Lesson 2.04_ColorizedApp
 #### Stack includes StackViews, Labels and Sliders.
 
 ## Lesson 2.09
-### Color transition between controllers through the delegate pattern and a segue.
-### ToolBar is added to keyboard.
+### One more view controller is added, color of which is changed by sliders or textfields in another view controller.
+#### Color transition between controllers through the delegate pattern and a segue.
+#### ToolBar is added to keyboard.
